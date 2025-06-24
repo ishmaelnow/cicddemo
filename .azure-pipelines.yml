@@ -1,19 +1,16 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
+# Trigger the pipeline to run on changes to the 'main' branch
 trigger:
-- master
+  branches:
+    include:
+      - main
 
+# Define the build agent pool to use
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'  # Use the latest Ubuntu image provided by Microsoft
 
+# Define the sequence of steps to execute
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - script: |
+      npm install    # Install project dependencies listed in package.json
+      npm test       # Run the tests defined in your project (commonly uses Jest, Mocha, etc.)
+    displayName: 'Install Dependencies and Run Tests'  # Friendly name shown in pipeline logs
